@@ -31,31 +31,31 @@ else:
     lv = 1
     exp = 0
     inv = {
-    "slot1" = 0,
-    "slot2" = 0,
-    "slot3" = 0,
-    "slot4" = 0,
-    "slot5" = 0,
-    "slot6" = 0,
-    "slot7" = 0,
-    "slot8" = 0,
-    "slot9" = 0
+    "slot1" : 0,
+    "slot2" : 0,
+    "slot3" : 0,
+    "slot4" : 0,
+    "slot5" : 0,
+    "slot6" : 0,
+    "slot7" : 0,
+    "slot8" : 0,
+    "slot9" : 0
     }
     arm = {
-    'armorOne' = 0,
-    'armorTwo' = 0,
-    'armorThree' = 0,
-    'armorFour' = 0
+    'armorOne' : 0,
+    'armorTwo' : 0,
+    'armorThree' : 0,
+    'armorFour' : 0
     }
     name = "Player"
     savedata = {
-    'money' = money,
-    'health' = health,
-    'lv'= lv,
-    'exp' = exp,
-    'inv' = inv,
-    'arm' = arm,
-    'name' = name
+    'money' : money,
+    'health' : health,
+    'lv' : lv,
+    'exp' : exp,
+    'inv' : inv,
+    'arm' : arm,
+    'name' : name
     }
     with open('save0.filec',"w") as f:
         json.dump(savedata,f)
@@ -69,13 +69,13 @@ def save():
     global arm
     global name
     savedata = {
-    money = money,
-    'health' = health,
-    'lv' = lv,
-    'exp' = exp,
-    'inv' = inv,
-    'arm' = arm,
-    'name' = name
+    'money' : money,
+    'health' : health,
+    'lv' : lv,
+    'exp' : exp,
+    'inv' : inv,
+    'arm' : arm,
+    'name' : name
     }
     with open('save0.filec',"w") as f:
         json.dump(savedata,f)
@@ -118,5 +118,5 @@ def Update(canvas,root):
 root = Tk()
 root.title("ComiRun")
 visualise()
-thread.start_new_thread(update,(canvas,root)
+thread.start_new_thread(update,(canvas,root))
 root.mainloop()
