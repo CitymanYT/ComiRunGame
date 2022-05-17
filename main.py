@@ -107,7 +107,7 @@ class Block():
         self.id = id
         self.canvas = canvas
         self.root = root
-        self.image = ImageTk.PhotoImage(Image.open(f'{id}.png'))
+        self.image = PhotoImage(Image.open(f'{id}.png'))
     def getId(self):
         return self.id
     def getX(self):
@@ -115,16 +115,56 @@ class Block():
     def getY(self):
         return self.y
     def visualise(self):
-        self.windowv = Label(self.root,self.canvas,image = self.image)
+        self.windowv = Label(self.canvas,image = self.image)
         self.windowv.pack()
         self.window = self.canvas.create_window(self.x,self.y,window = self.windowv)
 #Загрузка, создание, и визуализация блоков
 blocks = []
 def visualise():
+    #Визуализация блоков
     pass
+#Обьект персонажа и его визуализация
+class User(object):
+    def __init__(self,x,y):
+        self.x = x
+        self.y = y
+        self.image = PhotoImage(Image.open('user.png'))
+        self.pastx = self.x
+        self.pasty = self.y
+    def getX(self):
+        return self.x
+    def getY(self):
+        return self.y
+    def visualise(self):
+        self.windowv = Label(self.canvas,image = self.image)
+        self.windowv.pack()
+        self.window = self.canvas.create_window(self.x,self.y,window = self.windowv)
+    def Update(self):
+        if self.x != self.pastx:
+            while self.x  != self.pastx:
+                if self.x < self.pastx:
+                    self.pastx = self.pastx - 20
+                    self.canvas.move(-20,0,self.window)
+                else:
+                    self.pastx = self.pastx + 20
+                    self.canvas.move(20,0,self.window)
+        if self.y != self.pasty:
+            while self.y  != self.pasty:
+                if self.y < self.pasty:
+                    self.pasty = self.pasty - 20
+                    self.canvas.move(0,-20,self.window)
+                else:
+                    self.pasty = self.pasty + 20
+                    self.canvas.move(0,20,self.window)
+user = User(0,200)
+#user.visualise()
+#Обьекты
 # Функция обновления
 def Update(canvas,root):
-    pass
+    user.Update()
+    for i in blocks():
+        for d in i:
+            d.Update()
 root = Tk()
 if dev == 0:
     root.title("ComiRun")
