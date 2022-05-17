@@ -12,7 +12,7 @@ import shutil
 import itertools
 import os.path
 import threading
-import ImageTK
+from PIL import ImageTK
 from PIL import Image
 #Загрузка
 if os.path.exists('save0.filec'):
