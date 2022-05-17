@@ -14,7 +14,11 @@ import os.path
 import threading
 from PIL import Image
 #Режим разработчика
-dev = 0
+dev  =0
+if os.path.exists('devfile.filec'):
+    dev = 1
+else:
+    dev = 0
 #Загрузка
 if os.path.exists('save0.filec'):
     with open('save0.filec',"r") as f:
