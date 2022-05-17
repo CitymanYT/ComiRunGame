@@ -35,6 +35,11 @@ else:
     health = 100
     lv = 1
     exp = 0
+    if dev == 1:
+        money = -1
+        health = 10000
+        lv = 100
+        exp = 10000
     inv = {
     "slot1" : 0,
     "slot2" : 0,
