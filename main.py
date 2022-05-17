@@ -54,3 +54,32 @@ else:
     }
     with open('save0.filec',"w") as f:
         json.dump(savedata,f)
+def save():
+    global money
+    global health
+    global lv
+    global exp
+    global inv
+    global arm
+    global name
+    savedata = {
+    money = money,
+    health = health,
+    lv = lv,
+    exp = exp,
+    inv = inv,
+    arm = arm,
+    name = name
+    }
+    with open('save0.filec',"w") as f:
+        json.dump(savedata,f)
+def load():
+    with open('save0.filec',"r") as f:
+        data = dict(json.load(f))
+    money = data['money']
+    health = data['health']
+    lv = data['lv']
+    exp = data['exp']
+    inv = data['inv']
+    arm = data['arm']
+    name = data['name']
