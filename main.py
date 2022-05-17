@@ -13,6 +13,8 @@ import itertools
 import os.path
 import threading
 from PIL import Image
+#Режим разработчика
+dev = 0
 #Загрузка
 if os.path.exists('save0.filec'):
     with open('save0.filec',"r") as f:
@@ -115,7 +117,10 @@ def visualise():
 def Update(canvas,root):
     pass
 root = Tk()
-root.title("ComiRun")
+if dev == 0:
+    root.title("ComiRun")
+else:
+    root.title("ComiRun - Dev version.")
 visualise()
 #threading.start_new_thread(update,(canvas,root))
 root.mainloop()
