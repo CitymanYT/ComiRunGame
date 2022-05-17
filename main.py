@@ -117,5 +117,5 @@ def Update(canvas,root):
 root = Tk()
 root.title("ComiRun")
 visualise()
-threading.start_new_thread(update,(canvas,root))
+#threading.start_new_thread(update,(canvas,root))
 root.mainloop()
