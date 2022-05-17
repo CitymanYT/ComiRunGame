@@ -11,7 +11,7 @@ import time
 import shutil
 import itertools
 import os.path
-import thread
+import threading
 import ImageTK
 from PIL import Image
 #Загрузка
@@ -118,5 +118,5 @@ def Update(canvas,root):
 root = Tk()
 root.title("ComiRun")
 visualise()
-thread.start_new_thread(update,(canvas,root))
+threading.start_new_thread(update,(canvas,root))
 root.mainloop()
