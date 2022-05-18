@@ -14,7 +14,7 @@ import os.path
 import threading
 from PIL import Image
 #Режим разработчика
-dev  =0
+dev = 0
 if os.path.exists('devfile.filec'):
     dev = 1
 else:
@@ -27,7 +27,7 @@ levelapp = {
 #levelformule = levelapp + levelapp
 #Типы генерации
 maps = {
-    'default' = {10 : grass,9 : stone,4:endlevel}
+    'default' = {10 : 'grass',9 : 'stone',4:'endlevel}
 }
 #Загрузка
 if os.path.exists('save0.filec'):
@@ -185,16 +185,24 @@ user = User(0,200)
 #user.visualise()
 #Обьекты
 # Функция обновления
-def Update(canvas,root):
+def Update(root,canvas):
     user.Update()
     for i in blocks():
         for d in i:
             d.Update()
+    for i in blocks():
+        for d in i:
+            if d.getX() == user.getX():
+                user.x = user.x + 10
+                user.Update()
+                if d.getX() == user.getX():
+                    user.x = user.x - 20
+                Update()
 root = Tk()
 if dev == 0:
     root.title("ComiRun")
 else:
     root.title("ComiRun - Dev version.")
 visualise()
-#threading.start_new_thread(update,(canvas,root))
+root.after(100,Update(root,canvas))
 root.mainloop()
