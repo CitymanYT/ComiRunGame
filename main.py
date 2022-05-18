@@ -19,27 +19,39 @@ if os.path.exists('devfile.filec'):
     dev = 1
 else:
     dev = 0
+#Уровни
+levelapp = {
+    'one': 10,
+    'two': 20
+}
+#levelformule = levelapp + levelapp
+#Типы генерации
+maps = {
+    'default' = {10 : grass,9 : stone,4:endlevel}
+}
 #Загрузка
 if os.path.exists('save0.filec'):
     with open('save0.filec',"r") as f:
         data = dict(json.load(f))
     money = data['money']
-    health = data['health']
     lv = data['lv']
     exp = data['exp']
+    weapon = data['weapon']
     inv = data['inv']
-    arm = data['arm']
-    name = data['name']
+    curretarmor = data['curretarmor']
+    armsets = data['armsets']
+    progress_unlocked = data['progress_unlocked']
 else:
     money= 0
-    health = 100
     lv = 1
+    progress_unlocked = 0
     exp = 0
     if dev == 1:
         money = -1
-        health = 10000
-        lv = 100
-        exp = 10000
+        lv = 10000
+        exp = 0
+        progress_unlocked = 10
+    weapon = 0
     inv = {
     "slot1" : 0,
     "slot2" : 0,
@@ -51,41 +63,51 @@ else:
     "slot8" : 0,
     "slot9" : 0
     }
-    arm = {
+    curretarmor = 0
+    armsets = {
     'armorOne' : 0,
     'armorTwo' : 0,
     'armorThree' : 0,
     'armorFour' : 0
     }
-    name = "Player"
+    if dev == 1:
+        name = "Dev"
+    else:
+        name = "Player"
     savedata = {
     'money' : money,
-    'health' : health,
+    'weapon': weapon,
     'lv' : lv,
     'exp' : exp,
     'inv' : inv,
-    'arm' : arm,
-    'name' : name
+    'armsets' : armsets,
+    'curretarmor' : curretarmor,
+    'name' : name,
+    'progress_unlocked' : progress_unlocked
     }
     with open('save0.filec',"w") as f:
         json.dump(savedata,f)
 # Функции загрузки/сохранения
 def save():
     global money
-    global health
+    global weapon
     global lv
     global exp
     global inv
-    global arm
+    global armsets
+    global curretarmor
+    global progress_unlocked
     global name
     savedata = {
     'money' : money,
-    'health' : health,
+    'weapon': weapon,
     'lv' : lv,
     'exp' : exp,
     'inv' : inv,
-    'arm' : arm,
-    'name' : name
+    'armsets' : armsets,
+    'curretarmor' : curretarmor,
+    'name' : name,
+    'progress_unlocked' : progress_unlocked
     }
     with open('save0.filec',"w") as f:
         json.dump(savedata,f)
@@ -93,12 +115,13 @@ def load():
     with open('save0.filec',"r") as f:
         data = dict(json.load(f))
     money = data['money']
-    health = data['health']
     lv = data['lv']
     exp = data['exp']
+    weapon = data['weapon']
     inv = data['inv']
-    arm = data['arm']
-    name = data['name']
+    curretarmor = data['curretarmor']
+    armsets = data['armsets']
+    progress_unlocked = data['progress_unlocked']
 # Обьект блока
 class Block():
     def __init__(self,x,y,id,canvas,root):
@@ -122,7 +145,9 @@ class Block():
 blocks = []
 def visualise():
     #Визуализация блоков
-    pass
+    for i in blocks():
+        for d in i:
+            d.visualise()
 #Обьект персонажа и его визуализация
 class User(object):
     def __init__(self,x,y):
