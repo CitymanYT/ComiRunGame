@@ -184,6 +184,8 @@ class User(object):
 user = User(0,200)
 #user.visualise()
 #Обьекты
+curretmusic = "file.ogg"
+musicduration = 0
 # Функция обновления
 def Update(root,canvas):
     user.Update()
@@ -198,6 +200,9 @@ def Update(root,canvas):
                 if d.getX() == user.getX():
                     user.x = user.x - 20
                 Update()
+    root.after(100,Update(root,canvas))
+def MusicControl(curretmusic):
+    #Music.play(curretmusic)
 root = Tk()
 if dev == 0:
     root.title("ComiRun")
@@ -205,4 +210,5 @@ else:
     root.title("ComiRun - Dev version.")
 visualise()
 root.after(100,Update(root,canvas))
+root.after(musicduration,MusicControl(curretmusic))
 root.mainloop()
