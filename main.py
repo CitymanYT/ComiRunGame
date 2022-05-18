@@ -98,6 +98,7 @@ def save():
     global curretarmor
     global progress_unlocked
     global name
+    global data
     savedata = {
     'money' : money,
     'weapon': weapon,
@@ -112,6 +113,15 @@ def save():
     with open('save0.filec',"w") as f:
         json.dump(savedata,f)
 def load():
+    global money
+    global lv
+    global exp
+    global weapon
+    global inv
+    global curretarmor
+    global armsets
+    global progress_unlocked
+    global data
     with open('save0.filec',"r") as f:
         data = dict(json.load(f))
     money = data['money']
@@ -189,10 +199,12 @@ musicduration = 0
 # Функция обновления
 def Update(root,canvas):
     user.Update()
-    for i in blocks():
+    global user
+    global blocks
+    for i in blocks:
         for d in i:
             d.Update()
-    for i in blocks():
+    for i in blocks:
         for d in i:
             if d.getX() == user.getX():
                 user.x = user.x + 10
@@ -203,6 +215,10 @@ def Update(root,canvas):
     root.after(100,Update(root,canvas))
 def MusicControl(curretmusic):
     #Music.play(curretmusic)
+    global musicduration
+    global curretmusic
+    global root
+    root.after(musicduration,MusicControl(curretmusic))
 root = Tk()
 if dev == 0:
     root.title("ComiRun")
