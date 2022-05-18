@@ -70,10 +70,7 @@ else:
     'armorThree' : 0,
     'armorFour' : 0
     }
-    if dev == 1:
-        name = "Dev"
-    else:
-        name = "Player"
+    name = "Player"
     savedata = {
     'money' : money,
     'weapon': weapon,
@@ -87,6 +84,13 @@ else:
     }
     with open('save0.filec',"w") as f:
         json.dump(savedata,f)
+#Режим разработчика
+if dev == 1:
+    money = -1
+    lv = 10000
+    exp = 0
+    progress_unlocked = 10
+    name = "Dev"
 # Функции загрузки/сохранения
 def save():
     global money
