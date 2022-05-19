@@ -29,6 +29,11 @@ levelapp = {
 maps = {
     'default' = {10 : 'grass',9 : 'stone',4:'endlevel}
 }
+#Типы брони
+armors = {
+    0:"empty",
+    1
+}
 #Загрузка
 if os.path.exists('save0.filec'):
     with open('save0.filec',"r") as f:
@@ -48,7 +53,7 @@ else:
     exp = 0
     if dev == 1:
         money = -1
-        lv = 10000
+        lv = 1000000
         exp = 0
         progress_unlocked = 10
     weapon = 0
