@@ -352,4 +352,4 @@ game_start.place(relx=.5, rely=.5, anchor="center")
 musicbutt = Button(canvas,command=call_mus,text = "Включить музыку. Текущее состояние - выкл.")
 musicbutt.place(relx=.5, rely=.7, anchor="center")
 root.mainloop()
-stopEntity = True
+musicthread.join()
