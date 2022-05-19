@@ -249,7 +249,9 @@ class Mob():
             if self.hp <= 0:
                 self.alive = False 
 #Битвы
-def start_battle(root,canvas):
+def start_battle():
+    global root
+    global canvas
     visualise()
     root.title("ComiRun - battle")
     #user.visualise()
@@ -302,6 +304,6 @@ else:
 #root.after(musicduration,MusicControl(curretmusic))
 canvas = Canvas(root)
 canvas.pack()
-game_start = Button(canvas,command=start_battle(root,canvas),text="Начать бой.")
+game_start = Button(canvas,command=start_battle,text="Начать бой.")
 game_start.pack()
 root.mainloop()
