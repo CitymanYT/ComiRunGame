@@ -204,7 +204,7 @@ class User(object):
                 else:
                     self.pasty = self.pasty + 20
                     self.canvas.move(0,20,self.window)
-user = User(0,200)
+#user = User(0,200)
 #Мобы
 mobs = []
 class Mob():
