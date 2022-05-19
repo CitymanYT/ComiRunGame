@@ -307,5 +307,5 @@ else:
 canvas = Canvas(root)
 canvas.pack()
 game_start = Button(canvas,command=start_battle,text="Начать бой.")
-game_start.pack()
+game_start.place(relx=.5, rely=.5, anchor="center")
 root.mainloop()
