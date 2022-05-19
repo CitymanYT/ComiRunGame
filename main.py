@@ -168,7 +168,7 @@ class Block():
 blocks = []
 def visualise():
     #Визуализация блоков
-    for i in blocks():
+    for i in blocks:
         for d in i:
             d.visualise()
 #Обьект персонажа и его визуализация
