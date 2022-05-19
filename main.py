@@ -208,7 +208,7 @@ class User(object):
 #Мобы
 mobs = []
 class Mob():
-    def __init__(self,typ,canvas):
+    def __init__(self,type,canvas):
         self.type = type
         self = self
         self.canvas = canvas
@@ -250,12 +250,12 @@ class Mob():
 def start_battle(root,canvas):
     visualise()
     root.title("ComiRun - battle")
-    user.visualise()
+    #user.visualise()
     for i in mobs:
         for d in i:
             d.visualise()
             d.spawn(random.randint(200,2000),random.randint(200,1000))
-    root.after(100,Update(root,canvas))
+    #root.after(100,Update(root,canvas))
 def end_battle(winstate):
     if winstate == "win":
         global exp
