@@ -294,6 +294,41 @@ def MusicControl(curretmusic):
     global musicduration
     global root
     root.after(musicduration,MusicControl(curretmusic))
+#Потоки(музыка)
+import pygame
+pygame.mixer.init()
+stopEntity = False
+stopMusic = False
+music = "musictest.mp3"
+musicduration = 0
+class Music(threading.Thread):
+    def __init__(self,threadID,name):
+        threading.Thread.__init__(self)
+        self.threadID = threadID
+        self.name = name
+    def run(self):
+        print("""Внимание! Невозможно загрузить музыку в том же потоке.
+        Выполняю загрузку другого потока....
+        Успешно!""")
+        pygame.mixer.music.load(music)
+        pygame.mixer.music.set_volume(100)
+    def runMusic(self):
+        pygame.mixer.music.play(loops=-1)
+    def stopMusic(self):
+        pygame.mixer.music.stop()
+def call_mus():
+    global musicbutt
+    global stopMusic
+    global musicthread
+    if stopMusic == True:
+        musicbutt['text'] = "Включить музыку. Текущее состояние - вкл."
+        musicthread.runMusic()
+        stopMusic = False
+    else:
+        musicbutt['text'] = "Включить музыку. Текущее состояние - выкл."
+        musicthread.stopMusic()
+        stopMusic = True
+#Окно
 root = Tk()
 if fullscreen == 1:
     root.state('zoomed')
@@ -306,6 +341,13 @@ else:
 #root.after(musicduration,MusicControl(curretmusic))
 canvas = Canvas(root)
 canvas.pack()
+musicthread = Music(1,"MusicThread")
+musicthread.start()
+stopMusic = True
+stopEntity = True
 game_start = Button(canvas,command=start_battle,text="Начать бой.")
 game_start.place(relx=.5, rely=.5, anchor="center")
+musicbutt = Button(canvas,command=call_mus,text = "Включить музыку. Текущее состояние - выкл.")
+musicbutt.place(relx=.5, rely=.7, anchor="center")
 root.mainloop()
+stopEntity = True
