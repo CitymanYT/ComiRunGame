@@ -95,6 +95,8 @@ else:
     }
     with open('save0.filec',"w") as f:
         json.dump(savedata,f)
+#Авторы
+authors = ["CitymanYT","Artem Shu","Nikita S."]
 #Режим разработчика
 if dev == 1:
     money = -1
@@ -262,7 +264,7 @@ def start_battle():
     for i in mobs:
         for d in i:
             d.visualise()
-            d.spawn(random.randint(200,2000),random.randint(200,1000))
+            d.spawn(random.randint(200,1000),200)
     #root.after(100,Update(root,canvas))
 def end_battle(winstate):
     if winstate == "win":
@@ -335,7 +337,7 @@ root = Tk()
 if fullscreen == 1:
     root.state('zoomed')
 else:
-    root.geometry("500x500")
+    root.geometry("1000x500")
 if dev == 0:
     root.title("ComiRun")
 else:
@@ -351,5 +353,7 @@ game_start = Button(canvas,command=start_battle,text="Начать бой.")
 game_start.place(relx=.5, rely=.5, anchor="center")
 musicbutt = Button(canvas,command=call_mus,text = "Включить музыку. Текущее состояние - выкл.")
 musicbutt.place(relx=.5, rely=.7, anchor="center")
+al = Label(canvas,text=f"CoriRun 2022 - 2022. Авторы: {str(authors)}")
+al.place(relx=.5,rely=.10,anchor="center")
 root.mainloop()
 musicthread.join()
