@@ -28,7 +28,7 @@ levelapp = {
 #levelformule = levelapp + levelapp
 #Типы генерации
 maps = {
-    'default' = {10 : 'grass',9 : 'stone',4:'endlevel}
+    'default' : {10 : 'grass',9 : 'stone',4:'endlevel'}
 }
 #Типы брони
 armors = {
@@ -218,7 +218,7 @@ class Mob():
         self.windowv.pack()
         self.window = self.canvas.create_window(self.x,self.y,window = self.windowv)
     def Update(self):
-                if self.x != self.pastx:
+        if self.x != self.pastx:
             while self.x  != self.pastx:
                 if self.x < self.pastx:
                     self.pastx = self.pastx - 20
@@ -257,7 +257,7 @@ def start_battle(root,canvas):
             d.spawn(random.randint(200,2000),random.randint(200,1000))
     root.after(100,Update(root,canvas))
 def end_battle(winstate):
-    if winstate = "win":
+    if winstate == "win":
         global exp
         exp = exp + 1
     else:
@@ -268,8 +268,8 @@ musicduration = 0
 version = "1.0"
 # Функция обновления
 def Update(root,canvas):
-    user.Update()
     global user
+    user.Update()
     global blocks
     for i in blocks:
         for d in i:
@@ -286,7 +286,6 @@ def Update(root,canvas):
 def MusicControl(curretmusic):
     #Music.play(curretmusic)
     global musicduration
-    global curretmusic
     global root
     root.after(musicduration,MusicControl(curretmusic))
 root = Tk()
