@@ -38,6 +38,8 @@ armors = {
     3: "iron",
     4: "diamond"
 }
+#Полный экран
+fullscreen = 0
 #Загрузка
 if os.path.exists('save0.filec'):
     with open('save0.filec',"r") as f:
@@ -289,6 +291,10 @@ def MusicControl(curretmusic):
     global root
     root.after(musicduration,MusicControl(curretmusic))
 root = Tk()
+if fullscreen == 1:
+    root.state('zoomed')
+else:
+    root.geometry("500x500")
 if dev == 0:
     root.title("ComiRun")
 else:
@@ -296,6 +302,6 @@ else:
 #root.after(musicduration,MusicControl(curretmusic))
 canvas = Canvas(root)
 canvas.pack()
-game_start = Button(canvas,function=start_battle(root,canvas),text="Начать бой.")
+game_start = Button(canvas,command=start_battle(root,canvas),text="Начать бой.")
 game_start.pack()
 root.mainloop()
