@@ -253,6 +253,8 @@ def start_battle():
     global root
     global canvas
     global game_start
+    global musicbutt
+    musicbutt.destroy()
     game_start.destroy()
     visualise()
     root.title("ComiRun - battle")
