@@ -293,7 +293,7 @@ if dev == 0:
     root.title("ComiRun")
 else:
     root.title("ComiRun - Dev version.")
-root.after(musicduration,MusicControl(curretmusic))
+#root.after(musicduration,MusicControl(curretmusic))
 canvas = Canvas(root)
 canvas.pack()
 game_start = Button(canvas,function=start_battle(root,canvas),text="Начать бой.")
