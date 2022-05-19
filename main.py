@@ -9,6 +9,7 @@ import json
 import os
 import time
 import shutil
+import random
 import itertools
 import os.path
 import threading
@@ -31,8 +32,11 @@ maps = {
 }
 #Типы брони
 armors = {
-    0:"empty",
-    1
+    0: "empty",
+    1: "stone",
+    2: "gold",
+    3: "iron",
+    4: "diamond"
 }
 #Загрузка
 if os.path.exists('save0.filec'):
@@ -201,10 +205,67 @@ class User(object):
                     self.pasty = self.pasty + 20
                     self.canvas.move(0,20,self.window)
 user = User(0,200)
-#user.visualise()
+#Мобы
+mobs = []
+class Mob():
+    def __init__(self,typ,canvas):
+        self.type = type
+        self = self
+        self.canvas = canvas
+        self.image = f"{type}.png"
+    def visualise(self,x,y):
+        self.windowv = Label(self.canvas,image = self.image)
+        self.windowv.pack()
+        self.window = self.canvas.create_window(self.x,self.y,window = self.windowv)
+    def Update(self):
+                if self.x != self.pastx:
+            while self.x  != self.pastx:
+                if self.x < self.pastx:
+                    self.pastx = self.pastx - 20
+                    self.canvas.move(-20,0,self.window)
+                else:
+                    self.pastx = self.pastx + 20
+                    self.canvas.move(20,0,self.window)
+        if self.y != self.pasty:
+            while self.y  != self.pasty:
+                if self.y < self.pasty:
+                    self.pasty = self.pasty - 20
+                    self.canvas.move(0,-20,self.window)
+                else:
+                    self.pasty = self.pasty + 20
+                    self.canvas.move(0,20,self.window)
+    def spawn(self,x,y):
+        self.spawned = True
+        self.alive = True
+        self.x = x
+        self.y = y
+        self.spawnedloop()
+    def spawnedloop(self):
+        while self.alive:
+            if self.spawned():
+                self.visualise(self.x,self.y)
+            if self.hp <= 0:
+                self.alive = False 
+#Битвы
+def start_battle(root,canvas):
+    visualise()
+    root.title("ComiRun - battle")
+    user.visualise()
+    for i in mobs:
+        for d in i:
+            d.visualise()
+            d.spawn(random.randint(200,2000),random.randint(200,1000))
+    root.after(100,Update(root,canvas))
+def end_battle(winstate):
+    if winstate = "win":
+        global exp
+        exp = exp + 1
+    else:
+        pass
 #Обьекты
 curretmusic = "file.ogg"
 musicduration = 0
+version = "1.0"
 # Функция обновления
 def Update(root,canvas):
     user.Update()
@@ -233,7 +294,9 @@ if dev == 0:
     root.title("ComiRun")
 else:
     root.title("ComiRun - Dev version.")
-visualise()
-root.after(100,Update(root,canvas))
 root.after(musicduration,MusicControl(curretmusic))
+canvas = Canvas(root)
+canvas.pack()
+game_start = Button(canvas,function=start_battle(root,canvas),text="Начать бой.")
+game_start.pack()
 root.mainloop()
