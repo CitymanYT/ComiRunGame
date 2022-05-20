@@ -266,8 +266,8 @@ def start_battle():
     al.destroy()
     global endbat
     global health
-    health = 0
-    endbat = Button(canvas,command=end_battle,text="Выйти из битвы. Эксперементальная функция!")
+    health = 100
+    endbat = Button(canvas,text="Выйти из битвы.",command=end_battle)
     endbat.pack()
     #visualise()
     root.title("ComiRun - battle")
@@ -291,6 +291,8 @@ def end_battle():
         exp = exp + 1
         mainmenu(root,canvas)
     elif winstate == "quit":
+        mainmenu(root,canvas)
+    else:
         mainmenu(root,canvas)
 #Обьекты
 curretmusic = "file.ogg"
@@ -378,8 +380,8 @@ if dev == 0:
 else:
     root.title("ComiRun - Dev version.")
 #root.after(musicduration,MusicControl(curretmusic))
-canvas = Canvas(root)
-canvas.pack()
+canvas = Canvas(root,bg="green")
+canvas.pack(expand=1,fill="both")
 musicthread = Music(1,"MusicThread")
 musicthread.start()
 stopMusic = True
