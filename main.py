@@ -26,6 +26,8 @@ levelapp = {
     'two': 20
 }
 #levelformule = levelapp + levelapp
+#Индикатор запуска
+running = False
 #Типы генерации
 maps = {
     'default' : {10 : 'grass',9 : 'stone',4:'endlevel'}
@@ -256,26 +258,44 @@ def start_battle():
     global canvas
     global game_start
     global musicbutt
+    global al
+    global winstate
+    winstate = "quit"
     musicbutt.destroy()
     game_start.destroy()
-    visualise()
+    al.destroy()
+    global endbat
+    global health
+    health = 0
+    endbat = Button(canvas,command=end_battle,text="Выйти из битвы. Эксперементальная функция!")
+    endbat.pack()
+    #visualise()
     root.title("ComiRun - battle")
     #user.visualise()
-    for i in mobs:
-        for d in i:
-            d.visualise()
-            d.spawn(random.randint(200,1000),200)
+    #for i in mobs:
+        #for d in i:
+            #d.visualise()
+            #d.spawn(random.randint(200,1000),200)
+    if health <= 0:
+        winstate = "died"
+        end_battle()
     #root.after(100,Update(root,canvas))
-def end_battle(winstate):
+def end_battle():
+    global canvas
+    global root
+    global winstate
+    global endbat
+    endbat.destroy()
     if winstate == "win":
         global exp
         exp = exp + 1
-    else:
-        pass
+        mainmenu(root,canvas)
+    elif winstate == "quit":
+        mainmenu(root,canvas)
 #Обьекты
 curretmusic = "file.ogg"
 musicduration = 0
-version = "1.0"
+version = "1.0.1"
 # Функция обновления
 def Update(root,canvas):
     global user
@@ -332,6 +352,21 @@ def call_mus():
         musicbutt['text'] = "Включить музыку. Текущее состояние - выкл."
         musicthread.stopMusic()
         stopMusic = True
+def mainmenu(root,canvas):
+    global game_start
+    global musicbutt
+    global al
+    global dev
+    if dev == 0:
+        root.title("ComiRun")
+    else:
+        root.title("ComiRun - Dev version.")
+    game_start = Button(canvas,command=start_battle,text="Начать бой.")
+    game_start.pack()
+    musicbutt = Button(canvas,command=call_mus,text = "Включить музыку. Текущее состояние - выкл.")
+    musicbutt.pack()
+    al = Label(canvas,text=f"CoriRun 2022 - 2022. Авторы: {str(authors)}")
+    al.pack()
 #Окно
 root = Tk()
 if fullscreen == 1:
@@ -349,11 +384,7 @@ musicthread = Music(1,"MusicThread")
 musicthread.start()
 stopMusic = True
 stopEntity = True
-game_start = Button(canvas,command=start_battle,text="Начать бой.")
-game_start.place(relx=.5, rely=.5, anchor="center")
-musicbutt = Button(canvas,command=call_mus,text = "Включить музыку. Текущее состояние - выкл.")
-musicbutt.place(relx=.5, rely=.7, anchor="center")
-al = Label(canvas,text=f"CoriRun 2022 - 2022. Авторы: {str(authors)}")
-al.place(relx=.5,rely=.10,anchor="center")
+running = True
+mainmenu(root,canvas)
 root.mainloop()
-musicthread.join()
+musicthread.stopMusic()
