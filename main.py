@@ -403,7 +403,7 @@ def mainmenu(root,canvas):
     expt.pack()
     expv = Label(canvas,textvariable=expvar)
     expv.pack()
-    expn = Label(canvas,text="Осталось до повышения: {exp}/{lv*10}")
+    expn = Label(canvas,text=f"Осталось до повышения: {exp}/{lv*10}")
     expn.pack()
 #Окно
 root = Tk()
