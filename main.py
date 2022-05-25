@@ -83,7 +83,6 @@ else:
     'armorThree' : 0,
     'armorFour' : 0
     }
-    name = "Player"
     savedata = {
     'money' : money,
     'weapon': weapon,
@@ -92,7 +91,6 @@ else:
     'inv' : inv,
     'armsets' : armsets,
     'curretarmor' : curretarmor,
-    'name' : name,
     'progress_unlocked' : progress_unlocked
     }
     with open('save0.filec',"w") as f:
@@ -105,7 +103,6 @@ if dev == 1:
     lv = 10000
     exp = 0
     progress_unlocked = 10
-    name = "Dev"
 # Функции загрузки/сохранения
 def save():
     global money
@@ -116,7 +113,6 @@ def save():
     global armsets
     global curretarmor
     global progress_unlocked
-    global name
     global data
     savedata = {
     'money' : money,
@@ -126,7 +122,6 @@ def save():
     'inv' : inv,
     'armsets' : armsets,
     'curretarmor' : curretarmor,
-    'name' : name,
     'progress_unlocked' : progress_unlocked
     }
     with open('save0.filec',"w") as f:
@@ -260,6 +255,22 @@ def start_battle():
     global musicbutt
     global al
     global winstate
+    global sv
+    global lo
+    global lvvar
+    global expvar
+    global lvt
+    global expv
+    global expt
+    global lvv
+    global expn
+    lvt.destroy()
+    expv.destroy()
+    expt.destroy()
+    lvv.destroy()
+    expn.destroy()
+    sv.destroy()
+    lo.destroy()
     winstate = "quit"
     musicbutt.destroy()
     game_start.destroy()
@@ -359,6 +370,10 @@ def mainmenu(root,canvas):
     global musicbutt
     global al
     global dev
+    global sv
+    global lo
+    global lv
+    global exp
     if dev == 0:
         root.title("ComiRun")
     else:
@@ -369,6 +384,27 @@ def mainmenu(root,canvas):
     musicbutt.pack()
     al = Label(canvas,text=f"CoriRun 2022 - 2022. Авторы: {str(authors)}")
     al.pack()
+    sv = Button(canvas,command=save,text = "Сохранится")
+    sv.pack()
+    lo = Button(canvas,command=load,text= "Загрузиться")
+    lo.pack()
+    global lvvar
+    global expvar
+    global lvt
+    global expv
+    global expt
+    global lvv
+    global expn
+    lvt =  Label(canvas,text="Уровень:")
+    lvt.pack()
+    lvv = Label(canvas,textvariable=lvvar)
+    lvv.pack()
+    expt = Label(canvas,text="Текущие очки:")
+    expt.pack()
+    expv = Label(canvas,textvariable=expvar)
+    expv.pack()
+    expn = Label(canvas,text="Осталось до повышения: {exp}/{lv*10}")
+    expn.pack()
 #Окно
 root = Tk()
 if fullscreen == 1:
@@ -384,6 +420,10 @@ canvas = Canvas(root,bg="green")
 canvas.pack(expand=1,fill="both")
 musicthread = Music(1,"MusicThread")
 musicthread.start()
+lvvar = IntVar()
+lvvar.set(lv)
+expvar = IntVar()
+expvar.set(exp)
 stopMusic = True
 stopEntity = True
 running = True
