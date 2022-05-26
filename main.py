@@ -28,6 +28,8 @@ levelapp = {
 #levelformule = levelapp + levelapp
 #Индикатор запуска
 running = False
+#Пасхалка
+load = 0
 #Типы генерации
 maps = {
     'default' : {10 : 'grass',9 : 'stone',4:'endlevel'}
@@ -299,7 +301,11 @@ def end_battle():
     endbat.destroy()
     if winstate == "win":
         global exp
-        exp = exp + 1
+        global lv
+        exp = exp + 5
+        while exp >= lv * 10:
+            exp = exp - lv * 10
+            lv = lv + 1
         mainmenu(root,canvas)
     elif winstate == "quit":
         mainmenu(root,canvas)
@@ -405,6 +411,11 @@ def mainmenu(root,canvas):
     expv.pack()
     expn = Label(canvas,text=f"Осталось до повышения: {exp}/{lv*10}")
     expn.pack()
+    global load
+    load = load + 1 
+    if load ==  10:
+        print("Пасхалка! xD")
+        load = 0
 #Окно
 root = Tk()
 if fullscreen == 1:
