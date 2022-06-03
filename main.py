@@ -277,6 +277,9 @@ def start_battle():
     al.destroy()
     global endbat
     global health
+    global mobcount
+    global mobs
+    mobcount = lv * 5
     health = 100
     endbat = Button(canvas,text="Выйти из битвы.",command=end_battle)
     endbat.pack()
@@ -287,8 +290,13 @@ def start_battle():
         #for d in i:
             #d.visualise()
             #d.spawn(random.randint(200,1000),200)
+            #if d.health <= 0:
+            #   mobcount = mobcount - 1    
     if health <= 0:
         winstate = "died"
+        end_battle()
+    if mobcount <= 0:
+        winstate = "win"
         end_battle()
     #root.after(100,Update(root,canvas))
 def end_battle():
@@ -310,7 +318,6 @@ def end_battle():
     else:
         mainmenu(root,canvas)
 #Обьекты
-curretmusic = "file.ogg"
 musicduration = 0
 version = "1.0.1"
 # Функция обновления
