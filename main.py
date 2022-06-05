@@ -259,6 +259,23 @@ class Mob():
                 self.alive = False 
     def getState(self):
         return self.alive
+# Трава
+class Trava(object):
+    def __init__(self,x,y,canvas):
+        self.x = x
+        self.y = y
+        self.canvas = canvas
+        self.image = PhotoImage(file = "trava.png")
+        self.pastx = self.x
+        self.pasty = self.y
+    def getX(self):
+        return self.x
+    def getY(self):
+        return self.y
+    def visualise(self):
+        self.windowv = Label(self.canvas,image = self.image)
+        self.windowv.pack()
+        self.window = self.canvas.create_window(self.x,self.y,window = self.windowv)
 #Битвы
 def start_battle():
     global root
@@ -291,7 +308,7 @@ def start_battle():
     global health
     global mobcount
     global objects
-    objects = []
+    objects = [0,[],0]
     global battlethread
     mobcount = lv * 5
     health = 100
@@ -299,7 +316,10 @@ def start_battle():
     endbat.pack()
     user = User(root.winfo_width()//2,250,canvas)
     user.visualise()
-    objects.append(user)
+    objects[0] = user
+    trava = Trava(root.winfo_width()//2,380,canvas)
+    trava.visualise()
+    objects[2] = trava
     #visualise()
     root.title("ComiRun - battle")
     #user.visualise()
