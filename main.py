@@ -113,7 +113,7 @@ def save():
     global armsets
     global curretarmor
     global progress_unlocked
-    global data
+    global savedata
     savedata = {
     'money' : money,
     'weapon': weapon,
@@ -136,6 +136,7 @@ def load():
     global armsets
     global progress_unlocked
     global data
+    global root
     with open('save0.filec',"r") as f:
         data = dict(json.load(f))
     money = data['money']
@@ -146,6 +147,12 @@ def load():
     curretarmor = data['curretarmor']
     armsets = data['armsets']
     progress_unlocked = data['progress_unlocked']
+    expvar.set(exp)
+    lvvar.set(lv)
+    root.update()
+    global expn
+    expn.config(text=f"Осталось до повышения: {exp}/{lv*10}")
+    root.update()
 # Обьект блока
 class Block():
     def __init__(self,x,y,id,canvas,root):
@@ -320,6 +327,13 @@ def end_battle():
 #Обьекты
 musicduration = 0
 version = "1.0.1"
+def updatetheentityofentity():
+    expvar.set(exp)
+    lvvar.set(lv)
+    root.update()
+    global expn
+    expn.config(text=f"Осталось до повышения: {exp}/{lv*10}")
+    root.update()
 # Функция обновления
 def Update(root,canvas):
     global user
@@ -395,8 +409,6 @@ def mainmenu(root,canvas):
     game_start.pack()
     musicbutt = Button(canvas,command=call_mus,text = "Включить музыку. Текущее состояние - вкл.")
     musicbutt.pack()
-    al = Label(canvas,text=f"CoriRun 2022 - 2022. Авторы: {str(authors)}")
-    al.pack()
     sv = Button(canvas,command=save,text = "Сохранится")
     sv.pack()
     lo = Button(canvas,command=load,text= "Загрузиться")
@@ -416,8 +428,15 @@ def mainmenu(root,canvas):
     expt.pack()
     expv = Label(canvas,textvariable=expvar)
     expv.pack()
+    #Update - 
+    # expvar.set()
+    # lvvar.set()
+    # root.update()
     expn = Label(canvas,text=f"Осталось до повышения: {exp}/{lv*10}")
     expn.pack()
+    updatetheentityofentity()
+    al = Label(canvas,text=f"CoriRun 2022 - 2022. Авторы: {str(authors)}")
+    al.pack()
 #Окно
 root = Tk()
 if fullscreen == 1:
