@@ -354,6 +354,8 @@ class Music(threading.Thread):
         threading.Thread.__init__(self)
         self.threadID = threadID
         self.name = name
+        pygame.mixer.music.load(music)
+        pygame.mixer.music.set_volume(100)
     def run(self):
         print("""Внимание! Невозможно загрузить музыку в том же потоке.
         Выполняю загрузку другого потока....
@@ -368,14 +370,14 @@ def call_mus():
     global musicbutt
     global stopMusic
     global musicthread
-    if stopMusic == True:
-        musicbutt['text'] = "Включить музыку. Текущее состояние - вкл."
-        musicthread.runMusic()
-        stopMusic = False
-    else:
+    if stopMusic == False:
         musicbutt['text'] = "Включить музыку. Текущее состояние - выкл."
         musicthread.stopMusic()
         stopMusic = True
+    else:
+        musicbutt['text'] = "Включить музыку. Текущее состояние - вкл."
+        musicthread.runMusic()
+        stopMusic = False
 def mainmenu(root,canvas):
     global game_start
     global musicbutt
@@ -391,7 +393,7 @@ def mainmenu(root,canvas):
         root.title("ComiRun - Dev version.")
     game_start = Button(canvas,command=start_battle,text="Начать бой.")
     game_start.pack()
-    musicbutt = Button(canvas,command=call_mus,text = "Включить музыку. Текущее состояние - выкл.")
+    musicbutt = Button(canvas,command=call_mus,text = "Включить музыку. Текущее состояние - вкл.")
     musicbutt.pack()
     al = Label(canvas,text=f"CoriRun 2022 - 2022. Авторы: {str(authors)}")
     al.pack()
@@ -439,5 +441,6 @@ stopMusic = True
 stopEntity = True
 running = True
 mainmenu(root,canvas)
+call_mus()
 root.mainloop()
 musicthread.stopMusic()
