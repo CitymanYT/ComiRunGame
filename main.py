@@ -297,7 +297,7 @@ def start_battle():
     health = 100
     endbat = Button(canvas,text="Выйти из битвы.",command=end_battle)
     endbat.pack()
-    user = User(500,500,canvas)
+    user = User(root.winfo_width()//2,250,canvas)
     user.visualise()
     objects.append(user)
     #visualise()
