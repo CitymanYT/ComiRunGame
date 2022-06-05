@@ -13,6 +13,7 @@ import random
 import itertools
 import os.path
 import threading
+import re
 from PIL import Image
 #Режим разработчика
 dev = 0
