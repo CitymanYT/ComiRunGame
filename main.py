@@ -14,7 +14,7 @@ import itertools
 import os.path
 import threading
 import re
-from PIL import Image
+from PIL import Image, ImageTk
 #Режим разработчика
 dev = 0
 if os.path.exists('devfile.filec'):
@@ -186,7 +186,7 @@ class User(object):
         self.x = x
         self.y = y
         self.canvas = canvas
-        self.image = PhotoImage(Image.open('user.png'))
+        self.image = PhotoImage(file = "user.png")
         self.pastx = self.x
         self.pasty = self.y
     def getX(self):
@@ -291,6 +291,7 @@ def start_battle():
     global health
     global mobcount
     global objects
+    objects = []
     global battlethread
     mobcount = lv * 5
     health = 100
@@ -349,14 +350,14 @@ def end_battle():
     global endbat
     global objects
     global battlethread
-    battlethread.changeState(false)
+    battlethread.changeState(False)
     endbat.destroy()
     for i in objects:
         if (isinstance(i, list)):
             for d in i:
-                d.window.remove()
+                canvas.delete(d.window)
         else:
-            i.remove()
+            canvas.delete(i.window)
     if winstate == "win":
         global exp
         global lv
