@@ -222,6 +222,7 @@ class Mob():
         self = self
         self.canvas = canvas
         self.image = f"{type}.png"
+        self.alive = False
     def visualise(self,x,y):
         self.windowv = Label(self.canvas,image = self.image)
         self.windowv.pack()
@@ -255,6 +256,8 @@ class Mob():
                 self.visualise(self.x,self.y)
             if self.hp <= 0:
                 self.alive = False 
+    def getState(self):
+        return self.alive
 #Битвы
 def start_battle():
     global root
@@ -286,11 +289,15 @@ def start_battle():
     global endbat
     global health
     global mobcount
-    global mobs
+    global objects
+    global battlethread
     mobcount = lv * 5
     health = 100
     endbat = Button(canvas,text="Выйти из битвы.",command=end_battle)
     endbat.pack()
+    user = User(500,500)
+    user.visualise()
+    objects.append(user)
     #visualise()
     root.title("ComiRun - battle")
     #user.visualise()
@@ -300,6 +307,9 @@ def start_battle():
             #d.spawn(random.randint(200,1000),200)
             #if d.health <= 0:
             #   mobcount = mobcount - 1    
+    #User
+    #Thread
+    battlethread = BtThread(2,"Battle Thread")
     if health <= 0:
         winstate = "died"
         end_battle()
@@ -307,12 +317,45 @@ def start_battle():
         winstate = "win"
         end_battle()
     #root.after(100,Update(root,canvas))
+class BtThread(threading.Thread):
+    def __init__(self,threadID,name):
+        threading.Thread.__init__(self)
+        self.threadID = threadID
+        self.name = name
+        self.loop = False
+    def run(self):
+        print("""Начало борьбы!""")
+        self.loop = True
+        while self.loop:
+            for i in objects[1]:
+                if i.getState() == False:
+                    mobcount = mobcount - 1
+                    objects.window.remove()
+            user.Update()
+            time.sleep(0.2)
+            if health <= 0:
+                winstate = "died"
+                end_battle()
+            if mobcount <= 0:
+                winstate = "win"
+                end_battle()
+    def changeState(self,state):
+        self.loop = state
 def end_battle():
     global canvas
     global root
     global winstate
     global endbat
+    global objects
+    global battlethread
+    battlethread.changeState(false)
     endbat.destroy()
+    for i in objects:
+        if (isinstance(i, list)):
+            for d in i:
+                d.window.remove()
+        else:
+            i.remove()
     if winstate == "win":
         global exp
         global lv
