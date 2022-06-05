@@ -182,9 +182,10 @@ def visualise():
             d.visualise()
 #Обьект персонажа и его визуализация
 class User(object):
-    def __init__(self,x,y):
+    def __init__(self,x,y,canvas):
         self.x = x
         self.y = y
+        self.canvas = canvas
         self.image = PhotoImage(Image.open('user.png'))
         self.pastx = self.x
         self.pasty = self.y
@@ -295,7 +296,7 @@ def start_battle():
     health = 100
     endbat = Button(canvas,text="Выйти из битвы.",command=end_battle)
     endbat.pack()
-    user = User(500,500)
+    user = User(500,500,canvas)
     user.visualise()
     objects.append(user)
     #visualise()
